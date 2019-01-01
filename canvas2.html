@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Bangers|Creepster|Frijole|Nosifer" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+
+
+
+  <script type="application/javascript">
+    function draw(){
+
+      var canvas = document.getElementById('canvas');
+      var ctx = canvas.getContext('2d');
+      canvas.style = "position:absolute; left: 5%; top: 5%; width: 550px; ";
+
+      var grass = document.createElement('img');
+      var wall = document.createElement('img');
+      var player0 = document.createElement('img');
+      var player1 = document.createElement('img');
+      var weapon0 = document.createElement('img');
+      var weapon1 = document.createElement('img');
+      var weapon2 = document.createElement('img');
+      var weapon3 = document.createElement('img');
+
+      var p0axe = document.createElement('img');
+      var p0broad = document.createElement('img');
+      var p0long = document.createElement('img');
+      var p0dag = document.createElement('img');
+
+      var p1axe = document.createElement('img');
+      var p1broad = document.createElement('img');
+      var p1long = document.createElement('img');
+      var p1dag = document.createElement('img');
+
+      grass.src = 'photos/grass.png';
+      wall.src = 'photos/wall.png';
+      player0.src = 'photos/p0.png';
+      player1.src = 'photos/p1.png';
+      weapon0.src = 'photos/broad.png';
+      weapon1.src = 'photos/long.png';
+      weapon2.src = 'photos/axe.png';
+      weapon3.src = 'photos/dag.png';
+
+      p0broad.src = 'photos/p0broad.png';
+      p0long.src = 'photos/p0long.png';
+      p0axe.src = 'photos/p0axe.png';
+      p0dag.src = 'photos/p0dag.png';
+
+      p1broad.src = 'photos/p1broad.png';
+      p1long.src = 'photos/p1long.png';
+      p1axe.src = 'photos/p1axe.png';
+      p1dag.src = 'photos/p1dag.png';
+
+      renderBoard();
+      } // draw function finish
+
+    function renderBoard(){
+      var posX = 0;
+      var posY = 0;
+
+      for (let i = 0; i < game.gameBoard.length; i++){
+        for (let j = 0; j < game.gameBoard[i].length; j++){
+          if (game.gameBoard[i][j] === 0){
+            ctx.drawImage(grass, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.weapons[0]){
+            ctx.drawImage(weapon0, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.weapons[1]){
+            ctx.drawImage(weapon1, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.weapons[2]){
+            ctx.drawImage(weapon2, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.weapons[3]){
+            ctx.drawImage(weapon3, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.players[0]){
+            ctx.drawImage(player0, posX, posY, 64,64);
+          }
+          // player0 wielding weapons
+          if (game.gameBoard[i][j] === game.players[0] && game.weapons[0].dps===game.players[0].dps){
+            ctx.drawImage(p0broad, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.players[0] && game.weapons[1].dps===game.players[0].dps){
+            ctx.drawImage(p0long, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.players[0] && game.weapons[2].dps===game.players[0].dps){
+            ctx.drawImage(p0axe, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.players[0] && game.weapons[3].dps===game.players[0].dps){
+            ctx.drawImage(p0dag, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.players[1]){
+            ctx.drawImage(player1, posX, posY, 64,64);
+          }
+          // player1 wielding weapons
+          if (game.gameBoard[i][j] === game.players[1] && game.weapons[0].dps===game.players[1].dps){
+            ctx.drawImage(p1broad, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.players[1] && game.weapons[1].dps===game.players[1].dps){
+            ctx.drawImage(p1long, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.players[1] && game.weapons[2].dps===game.players[1].dps){
+            ctx.drawImage(p1axe, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === game.players[1] && game.weapons[3].dps===game.players[1].dps){
+            ctx.drawImage(p1dag, posX, posY, 64,64);
+          }
+          if (game.gameBoard[i][j] === 'Wall'){
+              ctx.drawImage(wall, posX, posY, 64,64);
+          }
+
+          posX +=64;
+        }
+        posX = 0;
+        posY +=64;
+        }
+        document.getElementById('p0').innerHTML = game.players[0].health;
+        document.getElementById('p1').innerHTML = game.players[1].health;
+        document.getElementById('redDmgReceived').innerHTML = game.players[1].dps;
+        document.getElementById('blueDmgReceived').innerHTML = game.players[0].dps;
+    };
+
+ </script>
+ </head>
+
+ <body onload="draw();">
+   <nav class="navbar text-center">
+    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#createdBy">Brute and Gore</a>
+    <a id="refresh" class="nav-item nav-link" href="#">Restart Game</a>
+   </nav>
+   <div class="container-fluid">
+  	<div class="row ">
+  		<div class="col-6">
+        <canvas id="canvas" width="640" height="640"></canvas>
+  		</div>
+
+  		<div class="col-6 ">
+        <div style="height:40vh;" class="d-flex justify-content-around mt-3">
+          <div class="player colorRed">
+            Red health:
+            <p id="p0"></p><input type="checkbox" />
+              <img id="player0" src="./photos/player0.png">
+            <p id="redDmgReceived" class="hide"></p>
+          </div>
+
+          <div>
+            <h4>Winner:</h4>
+            <div id="winner">
+              <img id="p0Won" class="hide" src="./photos/player0.png">
+              <img id="p1Won" class="hide" src="./photos/player1.png">
+            </div>
+            <div id="winningPhrase" class="hide"></div>
+          </div>
+
+          <div class="player colorBlue">
+            Blue health:
+            <p id="p1"></p><input type="checkbox"/>
+              <img id="player1" class="hide" src="./photos/player1.png">
+            <p id="blueDmgReceived" class="hide"></p>
+          </div>
+        </div>
+
+
+        <div class="row">
+            <div id="up" class="col-3 key mx-auto">
+              <i class="fa fa-arrow-up"></i>
+            </div>
+        </div>
+
+        <div class="row" >
+            <div id="left" class="col-3 key mx-auto">
+              <i class="fa fa-arrow-left"></i>
+            </div>
+            <div id="attack" class="col-3 key">
+              <span>Attack</span>
+            </div>
+            <div id="right" class="col-3 key mx-auto">
+              <i class="fa fa-arrow-right"></i>
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="down" class="col-3 key mx-auto align-self-en">
+              <i class="fa fa-arrow-down"></i>
+            </div>
+        </div>
+
+  		</div>
+      <span class="rules" data-toggle="modal" data-target="#rules"><h1>Rules</h1></span>
+  	</div><!--/row-->
+
+  </div><!--container-->
+
+<!-- Created By Modal -->
+<div class="modal fade" id="createdBy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Created By:</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h3> <a href="mailto:tsimbiris@hotmail.com">Kleo Tsimperis</a></h3>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Created By Modal -END -->
+
+
+<!-- Rules Modal -->
+<div class="modal fade" id="rules" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle">Rules of the game</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <ul class="text-center">
+          <li >Each player starts with 100hp</li>
+          <li>The player take a turn, either moving 3 spots are attacking successfully</li>
+          <li>The first player with health 0, yields</li>
+          <li>Can't move to or through walls, can't move out of bounds</li>
+          <li>Each weapon deals different damage</li>
+          <li>If the checkbox at the side of the player is clicked, the player sustains 50% less damage</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Rules Modal -END -->
+ </body>
+   <script src="play.js"></script>
+   <script>
+   // Mouse moves
+   $('a#refresh').on('click',()=>window.location.reload());
+   $('div#up').on('click',() => {
+       game.walk(game.currentPlayer[0],-1,0);
+       return renderBoard();
+     });
+   $('div#down').on('click',() => {
+      game.walk(game.currentPlayer[0],1,0);
+      return renderBoard();
+     });
+   $('div#right').on('click',() => {
+     game.walk(game.currentPlayer[0],0,1);
+     return renderBoard();
+     });
+   $('div#left').on('click',() => {
+      game.walk(game.currentPlayer[0],0,-1);
+      return renderBoard();
+     });
+   $('div#attack').on('click',() => {
+      game.attack(game.currentPlayer[0]);
+      return renderBoard();
+     });
+   </script>
+   <script>
+   // Keyboard moves
+   $(document).keydown(function(e){
+     var inAndOut = function(element,addremclass){
+       $(element).addClass(addremclass);
+       setTimeout(function(){
+           $(element).removeClass(addremclass);
+       },300);
+     }
+
+     if (e.keyCode == 37) {
+         game.walk(game.currentPlayer[0],0,-1);
+         inAndOut("div#left","activate");
+         return renderBoard();
+     }
+     if (e.keyCode == 38) {
+         game.walk(game.currentPlayer[0],-1,0);
+         inAndOut("div#up","activate");
+         return renderBoard();
+     }
+     if (e.keyCode == 39) {
+         game.walk(game.currentPlayer[0],0,1);
+         inAndOut("div#right","activate");
+         return renderBoard();
+     }
+     if (e.keyCode == 40) {
+         game.walk(game.currentPlayer[0],1,0);
+         inAndOut("div#down","activate");
+         return renderBoard();
+     }
+     if (e.keyCode == 32) {
+         game.attack(game.currentPlayer[0]);
+         inAndOut("div#attack","attack");
+         return renderBoard();
+     }
+     });
+    // 37 - left
+    // 38 - up
+    // 39 - right
+    // 40 - down
+    // 32 - spacebar
+   </script>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+</html>
